@@ -1,8 +1,11 @@
 float[] x; // horizontal points
 float[] y; // vertical points
 int N = 100; // Number of points
+// There's one index for each side that we want to draw lines on
 int i = 0;
-int j = 0; // for the second drawing loop
+int j = 0;
+int k = 0;
+int l = 0;
 boolean oneTime = true;
 
 void setup() {
@@ -16,20 +19,19 @@ void setup() {
 }
 
 void draw() {
-	if (i < N) {
-		line(0, y[i], x[i], 720);
-		i = i + 1;
-	} else if (j < N) {
-		if (oneTime) { // reverse only the first time executed
-			y = reverse(y);
-			oneTime = false;
-		}
-		line(x[j], 720, 1280, y[j]);
-		j = j + 1;
-	} else {
-		save("praderaInfinita.jpg");
-		noLoop();
-	}
+    if (i < N) {
+        line(0, y[i], x[i], height);
+        i++;
+    } else if (j < N) {
+        line(x[j], height, width, reverse(y)[j]);
+        j++;
+    } else if (k < N) {
+        line(width, reverse(y)[k], reverse(x)[k], 0);
+        k++;
+    } else if (l < N) {
+        line(reverse(x)[l], 0, 0, y[l]);
+        l++;
+    }
 }
 
 float[] linspace(float initVal, float finVal, int numPoints) {
